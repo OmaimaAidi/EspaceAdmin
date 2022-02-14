@@ -5,7 +5,11 @@
       <img src="https://github.com/themeselection/materio-vuetify-vuejs-admin-template-free/blob/main/src/assets/images/logos/logo.svg" alt="materio-logo" width="60px" height="auto">
    </a>
 </p>
-
+<h1 align="center">
+   <a href="https://themeselection.com/products/materio-free-vuetify-vuejs-admin-template" target="_blank" align="center">
+     The template used 
+   </a>
+</h1>
 <h1 align="center">
    <a href="https://themeselection.com/products/materio-free-vuetify-vuejs-admin-template" target="_blank" align="center">
       Materio - Vuetify VueJS Free Admin Template
