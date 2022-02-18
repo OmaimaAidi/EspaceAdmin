@@ -1,6 +1,7 @@
 <template>
-  <v-card>
-     <v-card-title class="align-start">
+
+   <v-card>
+    <v-card-title class="align-start">
       <span class="font-weight-semibold">Parents list </span>
      
     </v-card-title>
@@ -8,70 +9,90 @@
      <v-col cols="12">
         <v-btn color="info"
         @click="goToForm()">
-        Add new Parent
+        Add new parent
         </v-btn>
      </v-col>
     <v-data-table
       :headers="headers"
-      :items="usreList"
-      item-key="full_name"
+      :items="parent"
+      :items-per-page="10" 
       class="table-rounded"
       hide-default-footer
       disable-sort
     >
       <!-- name -->
-      <template #[`item.full_name`]="{item}">
+      <!-- <template #[`item.full_name`]="{item}">
         <div class="d-flex flex-column">
           <span class="d-block font-weight-semibold text--primary text-truncate">{{ item.full_name }}</span>
           <small>{{ item.post }}</small>
         </div>
-      </template>
-     
-      <!-- status -->
-      <template #[`item.status`]="{item}">
-        <v-chip
-          small
-          :color="statusColor[status[item.status]]"
-          class="font-weight-medium"
-        >
-          {{ status[item.status] }}
-        </v-chip>
-      </template>
+      </template> -->
+<!--     
+     <template #[`item.actions`]="{item}">
+       <v-btn icon @click="delete(item.id)">
+      <v-icon large > mdiDeleteOutline </v-icon>
+       </v-btn>
+      </template>  -->
+    
     </v-data-table>
   </v-card>
 </template>
 
 <script>
-import { mdiSquareEditOutline, mdiDotsVertical } from '@mdi/js'
-import data from './datatable-data'
+import { mdiSquareEditOutline, mdiDotsVertical, mdiDeleteOutline} from '@mdi/js'
+import axios from 'axios'
+import Parents from '@/models/parent';
 
+ 
 export default {
-methods: {
-     goToForm(){
+  data() {
+    return {
+      parent: new Parents('', '', '','','',''),
+      submitted: false,
+      successful: false,
+      message: ''
+    };
+  },
+   methods : 
+   {
+    goToForm(){
    this.$router.push('/add-parent'); 
       },
-    loadUsers(){
-        axios.get('https://api.com/v1/users')
-            .then(function( response ){
-                this.users = response.data;
-            }.bind(this));
+      delete(id){
+
+      }
+      },  
+
+ async created(){
+    try{
+      const res = await axios.get("http://localhost:3000/parents");
+      this.parent = res.data;
+      console.log("data",res.data);
+      console.log("parent", this.parent);
+    } catch(err)
+    {
+      console.log(err);
     }
-},
-  setup() {
-   //const infos = loadUsers
+      },
+  
+  setup() { 
     return {
+       
       headers: [
-        { text: 'Image', value: 'status' },
-        { text: 'NAME', value: 'Name' },
-        { text: 'Adress', value: 'email' },
-        { text: 'PHONE', value: 'start_date' },
+        // { text: 'image', value: 'status' },
+        { text: 'First name', value: 'firstname' },
+        { text: 'Last name', value: 'lastName' },
+        { text: 'Adress', value: 'adress' },
+        { text: 'Phone', value: 'phone' },
+        { text: 'Actions', value: 'actions' },
+        
       ],
-      usreList: data,
 
       // icons
       icons: {
         mdiSquareEditOutline,
         mdiDotsVertical,
+        mdiDeleteOutline,
       },
     }
   },

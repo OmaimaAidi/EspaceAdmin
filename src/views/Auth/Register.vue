@@ -146,19 +146,19 @@ export default {
   },
   mounted() {
     if (this.loggedIn) {
-      this.$router.push('/profile');
+      this.$router.push('/dashboard');
     }
   },
   methods: {
     handleRegister() {
       this.message = '';
       this.submitted = true;
-      this.$validator.validate().then(isValid => {
-        if (isValid) {
+ 
           this.$store.dispatch('auth/register', this.user).then(
             data => {
               this.message = data.message;
               this.successful = true;
+              console.log("registred")
             },
             error => {
               this.message =
@@ -168,8 +168,7 @@ export default {
               this.successful = false;
             }
           );
-        }
-      });
+     
     }
   },
   setup() {

@@ -4,10 +4,10 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    redirect: 'dashboard',
-  },
+  // {
+  //   path: '/',
+  //   redirect: 'dashboard',
+  // },
   {
     path: '/dashboard',
     name: 'dashboard',
@@ -68,17 +68,17 @@ const router = new VueRouter({
   routes,
 })
 
-// redirect to login if not connected 
+//redirect to login if not connected 
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register'];
+  const publicPages = [ '/register','/dashboard','/students', '/parents'];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem('user');
+  const loggedIn = localStorage.getItem('users');
 
   // trying to access a restricted page + not logged in
   // redirect to login page
   if (authRequired && !loggedIn) {
-    next('/login');
+    next('/dashboard');
   } else {
     next();
   }

@@ -1,23 +1,23 @@
 import axios from 'axios';
 
-const API_URL = 'https://multifaced-surfaces.000webhostapp.com';
+const API_URL = 'http://localhost:3000';
 
 class AuthService {
 
   login(user) {
     console.log('hey')
     return axios
-      .post(API_URL + '/api/admin/login', {
+      .post(API_URL + '/login', {
         email: user.email,
         password: user.password
       }, 
-     { headers :{
+     {  headers :{
         Accept : 'application/json'
       }
      })
-      .then(response => {
+      .then(response => {console.log("res")
         if (response.data.accessToken) {
-          localStorage.setItem('user', JSON.stringify(response.data));
+          localStorage.setItem('users', JSON.stringify(response.data));
           console.log('hey1')
         }
 
@@ -26,11 +26,11 @@ class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem('users');
   }
 
   register(user) {
-    return axios.post(API_URL + 'signup', {
+    return axios.post(API_URL + '/register', {
       username: user.username,
       email: user.email,
       password: user.password

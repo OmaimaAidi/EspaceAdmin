@@ -138,27 +138,28 @@
 </template>
 
 <script>
-import { ref } from '@vue/composition-api'
 import Student from '@/models/student';
 
 export default {
    data() {
     return {
-      student: new Student('', '', ''),
+      student: new Student('', '', '', '', '',''),
       submitted: false,
       successful: false,
       message: ''
     };
   },
   methods: {
-        submit(){
-            axios.post('https://api.com/v1/user', this.student)
-                .then(function( response ){
-                    // Handle success
-                    this.message = response.data.message;
-                    this.successful = true;
-                }.bind(this));
-        }
+       async submit(){
+          
+    try{
+      const res = await axios.post("http://localhost:3000/students",student);
+      this.$router.push('/students'); 
+    } catch(err){
+      console.log(err);
+    }
+      },
+        
     },
   setup() {
 
